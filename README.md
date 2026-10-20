@@ -51,3 +51,11 @@ Self-hosted: `scripts/serve_local.sh` runs llama.cpp (`--parallel` slots, KV cac
   prefix caching can work. Groq and CoreWeave reported ~1.5k cached tokens per request; three providers reported none.
 - **Synthetic eval with exact gold labels**: generated from templates, so scoring is exact, not LLM-judged.
 - Temperature 0; 120 cases, so differences of a few points between providers are noise, not a ranking.
+
+## Limits (read before quoting a number)
+- **Noise:** 120 orders → a 68% score has a 95% interval of roughly ±8 points. Provider accuracy differences (60–68%) are
+  inside that band: no quality ranking is claimed. The calendar gain (+16 points, same orders before/after) is outside it.
+- **Synthetic data:** real message shapes, not real customers. Some misses are the answer key's fault, e.g. "una docena de
+  unidades de almendras" answered as 1 box of 12 instead of 12 units: same almonds, scored wrong.
+- **One day, one account, one region.** Provider latency moves hour to hour; the Groq knee may be an account rate limit, not hardware.
+- **No self-hosted numbers yet.** The llama.cpp scripts are included; the local run was stopped to protect a shared machine.
