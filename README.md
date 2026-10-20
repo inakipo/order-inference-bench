@@ -50,11 +50,14 @@ Self-hosted: `scripts/serve_local.sh` runs llama.cpp (`--parallel` slots, KV cac
 - **Stable prompt prefix**: catalog + rules + few-shot examples first, per-request data (today's date, the message) last, so
   prefix caching can work. Groq and CoreWeave reported ~1.5k cached tokens per request; three providers reported none.
 - **Synthetic eval with exact gold labels**: generated from templates, so scoring is exact, not LLM-judged.
-- Temperature 0; 120 cases, so differences of a few points between providers are noise, not a ranking.
+- Temperature 0; reruns are reproducible (119/120 identical outputs on Groq and CoreWeave).
 
 ## Limits (read before quoting a number)
-- **Noise:** 120 orders → a 68% score has a 95% interval of roughly ±8 points. Provider accuracy differences (60–68%) are
-  inside that band: no quality ranking is claimed. The calendar gain (+16 points, same orders before/after) is outside it.
+- **Noise:** 120 orders → a 68% score has a 95% interval of roughly ±8 points (1.96·√(p(1−p)/n)), so provider totals
+  (60–68%) overlap. Because every provider got the *same* orders, the sharper test is paired (exact McNemar): Groq vs
+  CoreWeave split 12 vs 2 discordant orders (p ≈ 0.013), and a rerun gave 119/120 identical outputs, so the providers really do
+  answer differently on ~1 in 9 orders. With 10 provider pairs compared, "Groq beats CoreWeave" is a lead, not a ranking.
+  The calendar gain is solid: 25 orders fixed vs 6 broken (p < 0.001).
 - **Synthetic data:** real message shapes, not real customers. Some misses are the answer key's fault, e.g. "una docena de
   unidades de almendras" answered as 1 box of 12 instead of 12 units: same almonds, scored wrong.
 - **One day, one account, one region.** Provider latency moves hour to hour; the Groq knee may be an account rate limit, not hardware.
