@@ -20,6 +20,8 @@
 | deepinfra · prompt · cal | 95.0% | **73.3%** | 85.8% | 0.37 s | 1.84 s | 0.047 |
 | guard(groq->deepinfra) · prompt · guard | 98.3% | **69.2%** | 80.0% | 0.20 s | 0.60 s | 0.071 |
 | guard(groq->deepinfra) · prompt · guard+calendar | 100.0% | **84.2%** | 97.5% | 0.21 s | 0.52 s | 0.077 |
+| groq · prompt · r2 | 96.7% | **68.3%** | 80.0% | 0.20 s | 0.57 s | 0.073 |
+| coreweave · prompt · r2 | 98.3% | **60.0%** | 78.3% | 0.25 s | 0.93 s | 0.467 |
 
 ![workarounds](workarounds.png)
 
