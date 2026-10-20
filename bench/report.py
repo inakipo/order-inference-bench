@@ -69,8 +69,8 @@ def workaround_chart(rows):
     for i, v in enumerate(vals):
         ax.text(i + 0.2, v["all_fields_correct_%"] + 1, f"{v['all_fields_correct_%']:.0f}%", ha="center")
     ax.set_xticks(list(x), labels[: len(vals)])
-    ax.set(ylim=(0, 110), ylabel="% of 120 orders", title="Llama 3.1 8B on Spanish orders: what the workarounds buy")
-    ax.legend(frameon=False, loc="lower right")
+    ax.set(ylim=(0, 125), ylabel="% of 120 orders", title="Llama 3.1 8B on Spanish orders: what the workarounds buy")
+    ax.legend(frameon=False, loc="upper center", ncol=2)
     fig.tight_layout()
     fig.savefig(RES / "workarounds.png")
 
