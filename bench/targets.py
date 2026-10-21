@@ -17,6 +17,16 @@ def _openrouter(provider):
     }
 
 
+# RunPod (self-hosted vLLM). Both expose the OpenAI API:
+#   pod:        https://<POD_ID>-8000.proxy.runpod.net/v1
+#   serverless: https://api.runpod.ai/v2/<ENDPOINT_ID>/openai/v1
+RUNPOD_MODEL = os.environ.get("RUNPOD_MODEL", "meta-llama/Llama-3.1-8B-Instruct")
+
+
+def _runpod(url_env):
+    return {"base_url": os.environ.get(url_env, ""), "key_env": "RUNPOD_API_KEY", "model": RUNPOD_MODEL, "extra": {}}
+
+
 TARGETS = {
     "local-mac": {"base_url": LOCAL_URL, "key_env": None, "model": "local", "extra": {}},
     "deepinfra": _openrouter("deepinfra"),
@@ -24,4 +34,6 @@ TARGETS = {
     "groq": _openrouter("groq"),
     "cloudflare": _openrouter("cloudflare"),
     "coreweave": _openrouter("coreweave"),
+    "runpod-pod": _runpod("RUNPOD_POD_URL"),
+    "runpod-serverless": _runpod("RUNPOD_SERVERLESS_URL"),
 }
