@@ -9,6 +9,8 @@ no customer data leaves their systems.
 The question a customer actually asks: *can a small open model (Llama 3.1 8B) do this reliably, fast and cheap, and on
 which provider?*
 
+![workarounds](results/workarounds.png)
+
 ## What I found
 
 | | Result |
@@ -21,10 +23,9 @@ which provider?*
 | Workaround 2: schema guard | validate → one repair turn with the exact error → fall back to a second provider: **100% valid orders**, p95 0.52 s, $0.077 / 1k. |
 | Load | Groq: ~700 tok/s per user, throughput knee between 16 and 32 concurrent (TTFT p95 doubles). DeepInfra: ~100 tok/s per user, linear to 32. |
 
-Full tables and charts: [`results/REPORT.md`](results/REPORT.md) · customer write-up: [`docs/customer-report.md`](docs/customer-report.md) ·
+Full tables and charts: [`results/REPORT.md`](results/REPORT.md); customer write-up: [`docs/customer-report.md`](docs/customer-report.md);
 note to engineering: [`docs/field-note-engineering.md`](docs/field-note-engineering.md).
 
-![workarounds](results/workarounds.png)
 ![load](results/load_curve.png)
 
 ## Run it
@@ -53,7 +54,7 @@ Self-hosted: `scripts/serve_local.sh` runs llama.cpp (`--parallel` slots, KV cac
 - Temperature 0; reruns are reproducible (119/120 identical outputs on Groq and CoreWeave).
 
 ## Limits (read before quoting a number)
-- **Noise:** 120 orders → a 68% score has a 95% interval of roughly ±8 points (1.96·√(p(1−p)/n)), so provider totals
+- **Noise:** 120 orders → a 68% score has a 95% interval of roughly ±8 points (1.96 × √(p(1−p)/n)), so provider totals
   (60–68%) overlap. Because every provider got the *same* orders, the sharper test is paired (exact McNemar): Groq vs
   CoreWeave split 12 vs 2 discordant orders (p ≈ 0.013), and a rerun gave 119/120 identical outputs, so the providers really do
   answer differently on ~1 in 9 orders. With 10 provider pairs compared, "Groq beats CoreWeave" is a lead, not a ranking.

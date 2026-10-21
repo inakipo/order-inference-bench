@@ -1,6 +1,6 @@
 # Field note: structured output for small open models in EMEA
 
-**From:** a customer deployment (order extraction, Spanish) · **Model:** Llama 3.1 8B Instruct · **Date:** 2026-10-20
+**From:** a customer deployment (order extraction, Spanish) | **Model:** Llama 3.1 8B Instruct | **Date:** 2026-10-20
 
 ## What the customer hit
 1. **Schema enforcement mostly isn't there.** 4 of 5 providers serving Llama 3.1 8B rejected `response_format: json_schema`:

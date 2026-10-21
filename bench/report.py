@@ -30,7 +30,7 @@ def table(rows):
     head = "| Setup | Valid orders | All fields correct | Dates correct | TTFT p50 | Latency p95 | $ / 1k orders |\n|---|---|---|---|---|---|---|\n"
     body = ""
     for s in rows:
-        name = f"{s['target']} · {s['mode']}{(' · ' + s['tag'].strip('_')) if s.get('tag') else ''}"
+        name = f"{s['target']} / {s['mode']}{(' / ' + s['tag'].strip('_')) if s.get('tag') else ''}"
         if s["errors"] == s["n"]:
             body += f"| {name} | rejected by provider | | | | | |\n"
             continue
@@ -86,7 +86,7 @@ def main():
             load_md += (f"| {r['target']} | {r['concurrency']} | {r['throughput_out_tok_s']} | {r['per_user_decode_tok_s_p50']} | "
                         f"{r['ttft_p50_s']} s | {r['ttft_p95_s']} s | {r['latency_p95_s']} s |\n")
     (RES / "REPORT.md").write_text(
-        "# Results\n\n120 synthetic Spanish orders · Llama 3.1 8B Instruct · temperature 0 · via OpenRouter with one provider pinned per run.\n\n"
+        "# Results\n\n120 synthetic Spanish orders, Llama 3.1 8B Instruct, temperature 0, via OpenRouter with one provider pinned per run.\n\n"
         "## Quality, latency, cost\n\n" + table(rows) +
         "\n![workarounds](workarounds.png)\n\n## Load\n" + load_md + "\n![load](load_curve.png)\n")
     print((RES / "REPORT.md").read_text())

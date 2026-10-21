@@ -1,27 +1,27 @@
 # Results
 
-120 synthetic Spanish orders · Llama 3.1 8B Instruct · temperature 0 · via OpenRouter with one provider pinned per run.
+120 synthetic Spanish orders, Llama 3.1 8B Instruct, temperature 0, via OpenRouter with one provider pinned per run.
 
 ## Quality, latency, cost
 
 | Setup | Valid orders | All fields correct | Dates correct | TTFT p50 | Latency p95 | $ / 1k orders |
 |---|---|---|---|---|---|---|
-| deepinfra · prompt | 95.8% | **65.8%** | 78.3% | 0.42 s | 2.19 s | 0.044 |
-| deepinfra · json_schema | rejected by provider | | | | | |
-| novita · prompt | 96.7% | **64.2%** | 78.3% | 0.54 s | 1.51 s | 0.045 |
-| novita · json_schema | rejected by provider | | | | | |
-| groq · prompt | 97.5% | **68.3%** | 80.0% | 0.20 s | 0.47 s | 0.072 |
-| groq · json_schema | rejected by provider | | | | | |
-| cloudflare · prompt | 97.5% | **63.3%** | 79.2% | 0.75 s | 6.60 s | 0.332 |
-| cloudflare · json_schema | rejected by provider | | | | | |
-| coreweave · prompt | 98.3% | **60.0%** | 78.3% | 0.32 s | 1.64 s | 0.467 |
-| coreweave · json_schema | 96.7% | **57.5%** | 76.7% | 0.31 s | 1.48 s | 0.474 |
-| groq · prompt · cal | 99.2% | **84.2%** | 97.5% | 0.21 s | 0.70 s | 0.078 |
-| deepinfra · prompt · cal | 95.0% | **73.3%** | 85.8% | 0.37 s | 1.84 s | 0.047 |
-| guard(groq->deepinfra) · prompt · guard | 98.3% | **69.2%** | 80.0% | 0.20 s | 0.60 s | 0.071 |
-| guard(groq->deepinfra) · prompt · guard+calendar | 100.0% | **84.2%** | 97.5% | 0.21 s | 0.52 s | 0.077 |
-| groq · prompt · r2 | 96.7% | **68.3%** | 80.0% | 0.20 s | 0.57 s | 0.073 |
-| coreweave · prompt · r2 | 98.3% | **60.0%** | 78.3% | 0.25 s | 0.93 s | 0.467 |
+| deepinfra / prompt | 95.8% | **65.8%** | 78.3% | 0.42 s | 2.19 s | 0.044 |
+| deepinfra / json_schema | rejected by provider | | | | | |
+| novita / prompt | 96.7% | **64.2%** | 78.3% | 0.54 s | 1.51 s | 0.045 |
+| novita / json_schema | rejected by provider | | | | | |
+| groq / prompt | 97.5% | **68.3%** | 80.0% | 0.20 s | 0.47 s | 0.072 |
+| groq / json_schema | rejected by provider | | | | | |
+| cloudflare / prompt | 97.5% | **63.3%** | 79.2% | 0.75 s | 6.60 s | 0.332 |
+| cloudflare / json_schema | rejected by provider | | | | | |
+| coreweave / prompt | 98.3% | **60.0%** | 78.3% | 0.32 s | 1.64 s | 0.467 |
+| coreweave / json_schema | 96.7% | **57.5%** | 76.7% | 0.31 s | 1.48 s | 0.474 |
+| groq / prompt / cal | 99.2% | **84.2%** | 97.5% | 0.21 s | 0.70 s | 0.078 |
+| deepinfra / prompt / cal | 95.0% | **73.3%** | 85.8% | 0.37 s | 1.84 s | 0.047 |
+| guard(groq->deepinfra) / prompt / guard | 98.3% | **69.2%** | 80.0% | 0.20 s | 0.60 s | 0.071 |
+| guard(groq->deepinfra) / prompt / guard+calendar | 100.0% | **84.2%** | 97.5% | 0.21 s | 0.52 s | 0.077 |
+| groq / prompt / r2 | 96.7% | **68.3%** | 80.0% | 0.20 s | 0.57 s | 0.073 |
+| coreweave / prompt / r2 | 98.3% | **60.0%** | 78.3% | 0.25 s | 0.93 s | 0.467 |
 
 ![workarounds](workarounds.png)
 
