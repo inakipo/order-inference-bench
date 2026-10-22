@@ -24,7 +24,9 @@ RUNPOD_MODEL = os.environ.get("RUNPOD_MODEL", "meta-llama/Llama-3.1-8B-Instruct"
 
 
 def _runpod(url_env):
-    return {"base_url": os.environ.get(url_env, ""), "key_env": "RUNPOD_API_KEY", "model": RUNPOD_MODEL, "extra": {}}
+    # Qwen3.x thinks out loud by default; for extraction that only adds latency and tokens, so turn it off
+    extra = {"chat_template_kwargs": {"enable_thinking": False}} if "qwen" in RUNPOD_MODEL.lower() else {}
+    return {"base_url": os.environ.get(url_env, ""), "key_env": "RUNPOD_API_KEY", "model": RUNPOD_MODEL, "extra": extra}
 
 
 TARGETS = {

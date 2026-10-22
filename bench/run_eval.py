@@ -47,7 +47,7 @@ def summarize(rows):
 
 
 async def main(a):
-    cases = [json.loads(line) for line in (ROOT / "data" / "eval.jsonl").open()][: a.limit]
+    cases = [json.loads(line) for line in (ROOT / "data" / a.data).open()][: a.limit]
     sem = asyncio.Semaphore(a.concurrency)
     sys_msg = {"role": "system", "content": system_prompt()}
 
@@ -79,5 +79,6 @@ if __name__ == "__main__":
     p.add_argument("--concurrency", type=int, default=4)
     p.add_argument("--limit", type=int, default=None)
     p.add_argument("--tag", default="")
+    p.add_argument("--data", default="eval.jsonl", help="eval file under data/ (eval_paraphrased.jsonl = out-of-template rewrites)")
     p.add_argument("--calendar", action="store_true", help="resolve relative dates in code (workaround)")
     asyncio.run(main(p.parse_args()))

@@ -1,0 +1,15 @@
+{
+  "what": "Serverless cold start of Qwen3.5-9B FP8 on vLLM 0.32.0 (runpod/worker-v1-vllm:v2.30.0), L40S, EU-NL-1, max 1 worker. Times from the worker's own logs (container start to 'Starting Serverless Worker') plus the endpoint health states (GPU assigned to first answer).",
+  "runs": {
+    "A_empty_volume":   {"gpu_to_answer_s": 440, "note": "approx: worker got a GPU ~17:59:45 local, served 18:07:02; its logs were gone once it scaled down"},
+    "B_filled_volume_default_env": {"container_to_serving_s": 264, "gpu_to_answer_s": 277, "weights_s": 66.5, "torch_compile_s": 2.86, "warmup_s": 78.9, "init_engine_s": 136.0,
+                                    "note": "HF_HOME + VLLM_CACHE_ROOT on the volume: compile graph reused, but Triton kernels were cached in /tmp ('Cubin file ... not found') and recompiled during warmup"},
+    "C_populate_kernel_caches": {"container_to_serving_s": 280, "weights_s": 54.7, "torch_compile_s": 3.41, "warmup_s": 93.5, "init_engine_s": 164.7,
+                                 "note": "first run with TORCHINDUCTOR_CACHE_DIR and TRITON_CACHE_DIR on the volume: fills them"},
+    "D_fixed": {"container_to_serving_s": 143, "gpu_to_answer_s": 151, "weights_s": 39.9, "torch_compile_s": 1.77, "warmup_s": 1.64, "cuda_graph_capture_s": 25, "init_engine_s": 47.8}
+  },
+  "fix": {"TORCHINDUCTOR_CACHE_DIR": "/runpod-volume/vllm-cache/inductor", "TRITON_CACHE_DIR": "/runpod-volume/vllm-cache/triton",
+          "plus": {"HF_HOME": "/runpod-volume/hf", "VLLM_CACHE_ROOT": "/runpod-volume/vllm-cache"}},
+  "gpu_queue_waits_s": {"A": 1200, "B": 177, "C": 2520, "D": 390, "note": "EU-NL-1 is the only data centre with L40S that takes network volumes; the volume pins the endpoint there"},
+  "remaining_after_fix": {"python_and_engine_start_s": 40, "weights_from_network_volume_s": 40, "cuda_graph_capture_s": 25}
+}

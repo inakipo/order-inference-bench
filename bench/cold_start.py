@@ -23,7 +23,7 @@ async def main(a):
     case = json.loads((ROOT / "data" / "eval.jsonl").open().readline())
     msgs = [{"role": "system", "content": system_prompt()}, {"role": "user", "content": user_prompt(case)}]
     rows = []
-    async with httpx.AsyncClient() as http:
+    async with httpx.AsyncClient(timeout=900) as http:  # a cold start can take minutes; the 5 s default would log every one as an error
         for r in range(a.rounds):
             if r or a.wait_first:
                 print(f"round {r + 1}: idling {a.idle}s so workers scale to zero…", flush=True)

@@ -28,6 +28,16 @@ note to engineering: [`docs/field-note-engineering.md`](docs/field-note-engineer
 
 ![load](results/load_curve.png)
 
+## Runpod, as a new customer (2026-10-22)
+
+Same workload on Runpod with a fresh account, $1.68 of credit spent. Full write-up with the friction log and the top 3 fixes:
+[`docs/runpod-new-customer-report.md`](docs/runpod-new-customer-report.md).
+
+- **Serverless cold start on a cache volume: 4:37 → 2:31** (GPU assigned to first answer, L40S). The vLLM worker reuses the compile
+  graph from the volume but rebuilds the Triton kernels cached in `/tmp`; `TORCHINDUCTOR_CACHE_DIR` + `TRITON_CACHE_DIR` on the volume fix it (warm-up 79 s → 1.6 s).
+- **Pod vs serverless:** a 4090 pod does 618 orders/min at 32 users ($0.024 / 1k orders) but only beats the cheapest API above ~20k orders/h; serverless idles at $0.
+- **LoRA:** Qwen3.5-4B fine-tuned on 1,500 synthetic orders (47 min on one A40) gets **95.6%** on orders rewritten by a different model, vs 86.8% for the prompted 9B, at 2.0 s vs 3.4 s p50.
+
 ## Run it
 
 ```bash

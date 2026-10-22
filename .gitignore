@@ -2,3 +2,5 @@ results/server.log
 __pycache__/
 *.pyc
 .DS_Store
+lora/adapter/
+data/train.jsonl
